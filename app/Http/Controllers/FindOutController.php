@@ -8,14 +8,48 @@ class FindOutController extends Controller
 {
     public function __invoke()
     {
-        $stops_by_line = Storage::get('samples/stops-by-line-production.json');
-        $stop_details = Storage::get('samples/stop-details-production.json');
-        $travellers_information = Storage::get('samples/travellers-information-rt-production.json');
+        $stop_details = collect(Storage::json('samples/stop-details-production.json'))
+            ->map(fn ($stop) => [
+                'id' => $stop['id'],
+                'name' => json_decode($stop['name']),
+                'gpscoordinates' => json_decode($stop['gpscoordinates']),
+            ]);
+
+        $lines = collect(Storage::json('samples/stops-by-line-production.json'))
+            ->map(function ($line) use ($stop_details) {
+                $lines_stop = collect(json_decode($line['points']))->sortBy('order');
+
+                $lines_stop = $lines_stop->each(function ($stop) use ($stop_details) {
+                    $matching_stop = $stop_details->first(fn ($stop_detail) => $stop_detail['id'] == $stop->id);
+                    if ($matching_stop) {
+                        $stop->name = $matching_stop['name'];
+                    } else {
+                        // should log?
+                    }
+                });
+
+                return [
+                    'line' => $line['lineid'],
+                    'to' => json_decode($line['destination']),
+                    'direction' => $line['direction'],
+                    'stops' => $lines_stop,
+                ];
+            });
+
+        // Travellers information
+
+        $travellers_information = collect(Storage::json('samples/travellers-information-rt-production.json',))
+            ->map(fn ($info) => [
+                'content' => json_decode($info['content']),
+                'type' => $info['type'],
+                'lines' => json_decode($info['lines']),
+                'priority' => $info['priority'],
+                'stops' => json_decode($info['points']),
+            ]);
 
         return view('find-out')->with([
-            'stops_by_line' => json_decode($stops_by_line),
-            'stop_details' => json_decode($stop_details),
-            'travellers_information' => json_decode($travellers_information),
+            'lines' => $lines,
+            'travellers_information' => $travellers_information,
         ]);
     }
 }

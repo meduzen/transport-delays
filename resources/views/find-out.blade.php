@@ -10,31 +10,31 @@
 
     <h1>STIB Open Data exploration</h1>
 
-    <h2>Stops by Lines</h2>
+    <h2>Lines and stops</h2>
 
     <ul>
-        @foreach ($stops_by_line as $line)
-            <h3><code>lineid</code>: {{ $line->lineid }}</h3>
-            <p><code>destination</code> <code>fr</code> {{ json_decode($line->destination)->fr }}, <code>nl</code> {{ json_decode($line->destination)->nl }}</p>
-            <p><code>direction</code> {{ $line->direction }}</p>
-            <h4><code>points</code></h4>
+        @foreach ($lines as $line)
+            {{-- @dd($line) --}}
+            <h3>Line {{ $line['line'] }}</h3>
+            <p>To: <code>fr</code> {{ $line['to']->fr }}, <code>nl</code> {{ $line['to']->nl }}</p>
+            <p>direction {{ $line['direction'] }}</p>
+            <h4>Stops</h4>
             <ul>
-                @foreach (json_decode($line->points) as $point)
-                <li><code>id</code>: {{ $point->id }}</li>
+                @foreach (json_decode($line['stops']) as $stop)
+                <li>
+                    <h5>Stop {{ $stop->order }}, id <strong>{{ $stop->id }}</strong></h5>
+                    @if (property_exists($stop, 'name'))
+                    <p>Name: <code>fr</code> {{ $stop->name?->fr }}, <code>nl</code> {{ $stop->name?->nl }}</p>
+                    @else
+                    <p><strong>missing stop name</strong></p>
+                    @endif
+                </li>
                 @endforeach
             </ul>
         @endforeach
     </ul>
 
-    <h2>Stop Details</h2>
-
-    <ul>
-        @foreach ($stop_details as $stop)
-            <h3><code>id</code>: {{ $stop->id }}</h3>
-            <p><code>name</code> <code>fr</code> {{ json_decode($stop->name)->fr }}, <code>nl</code> {{ json_decode($stop->name)->nl }}</p>
-            <p><code>gpscoordinates</code> {{ $stop->gpscoordinates }}</p>
-        @endforeach
-    </ul>
+    <hr>
 
     <h2>Travellers Information (RT)</h2>
 
@@ -46,7 +46,7 @@
             <h3>#{{ $loop->index }}</h3>
             <h4><code>Content</code></h4>
             <ul>
-                @foreach (json_decode($info->content) as $content)
+                @foreach ($info['content'] as $content)
                     <li><code>type</code>: {{ $content->type }}</li>
                     @foreach ($content->text as $text)
                         @if(property_exists($text, 'en'))
@@ -61,18 +61,18 @@
                     @endforeach
                 @endforeach
             </ul>
-            <p><code>type</code>: {{ $info->type }}</p>
+            <p><code>type</code>: {{ $info['type'] }}</p>
             <h4><code>lines</code></h4>
             <ul>
-                @foreach (json_decode($info->lines) as $line)
+                @foreach ($info['lines'] as $line)
                 <p><code>id</code>: {{ $line->id }}</p>
                 @endforeach
             </ul>
-            <p><code>priority</code>: {{ $info->priority }}</p>
+            <p><code>priority</code>: {{ $info['priority'] }}</p>
             <h3><code>points</code></h3>
             <ul>
-                @foreach (json_decode($info->points) as $point)
-                <li><code>id</code>: {{ $point->id }}</li>
+                @foreach ($info['stops'] as $stop)
+                <li><code>id</code>: {{ $stop->id }}</li>
                 @endforeach
             </ul>
         </li>
