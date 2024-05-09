@@ -15,7 +15,7 @@ class FindOutController extends Controller
                 'gpscoordinates' => json_decode($stop['gpscoordinates']),
             ]);
 
-        $lines = collect(Storage::json('samples/stops-by-line-production.json'))
+        $lines = collect(Storage::json('seed/stib-stops-by-line-production.json'))
             ->map(function ($line) use ($stop_details) {
                 $lines_stop = collect(json_decode($line['points']))->sortBy('order');
 
