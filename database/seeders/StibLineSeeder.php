@@ -22,6 +22,7 @@ class StibLineSeeder extends Seeder
             ->map(function ($line) {
                 $various = new stdClass();
                 $various->direction = $line['direction'];
+                $various->points = json_decode($line['points']);
 
                 return [
                     'name' => $line['lineid'],
