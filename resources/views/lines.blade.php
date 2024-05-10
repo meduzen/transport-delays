@@ -14,23 +14,9 @@
 
     <ul>
         @foreach ($lines as $line)
-            {{-- @dd($line) --}}
-            <h3>Line {{ $line['line'] }}</h3>
-            <p>To: <code>fr</code> {{ $line['to']->fr }}, <code>nl</code> {{ $line['to']->nl }}</p>
-            <p>direction {{ $line['direction'] }}</p>
-            <h4>Stops</h4>
-            <ul>
-                @foreach (json_decode($line['stops']) as $stop)
-                <li>
-                    <h5>Stop {{ $stop->order }}, id <strong>{{ $stop->id }}</strong></h5>
-                    @if (property_exists($stop, 'name'))
-                    <p>Name: <code>fr</code> {{ $stop->name?->fr }}, <code>nl</code> {{ $stop->name?->nl }}</p>
-                    @else
-                    <p><strong>missing stop name</strong></p>
-                    @endif
-                </li>
-                @endforeach
-            </ul>
+            <h3>Line {{ $line->name }}</h3>
+            <p>To: <code>fr</code> {{ $line->direction->fr }}, <code>nl</code> {{ $line->direction->nl }}</p>
+            <p>direction {{ $line->various->direction }}</p>
         @endforeach
     </ul>
 
