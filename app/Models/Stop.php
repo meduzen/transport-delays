@@ -49,4 +49,12 @@ class Stop extends Model
     {
         return $this->belongsToMany(Line::class);
     }
+
+    /**
+     * The statuses that belong to the stop.
+     */
+    public function statuses(): BelongsToMany
+    {
+        return $this->belongsToMany(Status::class);
+    }
 }

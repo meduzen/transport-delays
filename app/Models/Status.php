@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Line extends Model
+class Status extends Model
 {
     use HasFactory;
 
@@ -19,24 +19,23 @@ class Line extends Model
     protected function casts(): array
     {
         return [
-            'direction' => AsArrayObject::class,
-            'various' => AsArrayObject::class,
+            'content' => AsArrayObject::class,
         ];
     }
 
     /**
-     * The stops that belong to the line.
+     * The lines that belong to the status.
+     */
+    public function lines(): BelongsToMany
+    {
+        return $this->belongsToMany(Line::class);
+    }
+
+    /**
+     * The stops that belong to the status.
      */
     public function stops(): BelongsToMany
     {
         return $this->belongsToMany(Stop::class);
-    }
-
-    /**
-     * The statuses that belong to the line.
-     */
-    public function statuses(): BelongsToMany
-    {
-        return $this->belongsToMany(Status::class);
     }
 }
