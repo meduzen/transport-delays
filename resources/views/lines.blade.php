@@ -14,9 +14,11 @@
 
     <ul>
         @foreach ($lines as $line)
-            <h3>Line {{ $line->name }}</h3>
-            <p>To: <code>fr</code> {{ $line->direction->fr }}, <code>nl</code> {{ $line->direction->nl }}</p>
-            <p>direction {{ $line->various->direction }}</p>
+            <h3>Line {{ $line[0]->name }}</h3>
+            <ul>
+                <p>Direction {{ $line[0]->various->direction }}: <code>fr</code> {{ $line[0]->direction->fr }}, <code>nl</code> {{ $line[0]->direction->nl }}</p>
+                <p>Direction {{ $line[1]->various->direction }}: <code>fr</code> {{ $line[1]->direction->fr }}, <code>nl</code> {{ $line[1]->direction->nl }}</p>
+            </ul>
         @endforeach
     </ul>
 
