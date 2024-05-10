@@ -1,6 +1,6 @@
 <?php
 
-use Database\Seeders\StibStopsSeeder;
+use Database\Seeders\StibStopSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        (new StibStopsSeeder())->run();
+        (new StibStopSeeder())->run();
     }
 
     /**

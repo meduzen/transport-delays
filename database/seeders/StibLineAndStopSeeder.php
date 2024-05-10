@@ -6,7 +6,7 @@ use App\Models\Line;
 use App\Models\Stop;
 use Illuminate\Database\Seeder;
 
-class StibLinesAndStopsSeeder extends Seeder
+class StibLineAndStopSeeder extends Seeder
 {
     /**
      * Run the database seeds.
