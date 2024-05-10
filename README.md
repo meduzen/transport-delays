@@ -2,6 +2,7 @@ Work in progress.
 
 > [!WARNING]  
 > This is still super early work in progress. If you want to use the code and be able to seed the database, you currently need MySQL 8 as driver in order to be able to deal with the `geography` column type (using RSID 4326).
+> Also, don’t consider database migrations as stabilized at this stage.
 
 ---
 
