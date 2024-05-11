@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\StibSampleLineStatusSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,15 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('statuses', function (Blueprint $table) {
+        Schema::create('stib_line_stib_status', function (Blueprint $table) {
             $table->id();
-            $table->string('priority');
-            $table->string('type');
-            $table->json('content');
+            $table->foreignId('status_id');
+            $table->foreignId('line_id');
             $table->timestamps();
-            $table->timestamp('ended_at')->nullable();
-            $table->json('raw'); // for debug purpose
         });
+
+        (new StibSampleLineStatusSeeder)->run();
     }
 
     /**
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('statuses');
+        Schema::dropIfExists('stib_line_stib_status');
     }
 };

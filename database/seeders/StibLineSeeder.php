@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Line;
+use App\Models\StibLine;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -32,11 +32,11 @@ class StibLineSeeder extends Seeder
                 ];
             });
 
-        DB::table('lines')->insert($lines->toArray());
+        DB::table('stib_lines')->insert($lines->toArray());
 
         // Try to associate lines running in opposite direction.
 
-        $lines = Line::all();
+        $lines = StibLine::all();
 
         $lines->each(function($line) use ($lines) {
 

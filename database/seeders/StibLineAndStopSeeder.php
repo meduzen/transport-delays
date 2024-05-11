@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Line;
-use App\Models\Stop;
+use App\Models\StibLine;
+use App\Models\StibStop;
 use Illuminate\Database\Seeder;
 
 class StibLineAndStopSeeder extends Seeder
@@ -13,9 +13,9 @@ class StibLineAndStopSeeder extends Seeder
      */
     public function run(): void
     {
-        $stops = Stop::all();
+        $stops = StibStop::all();
 
-        Line::all()->each(function($line) use ($stops) {
+        StibLine::all()->each(function($line) use ($stops) {
             $lines_stop = collect($line->various->points)
                 ->sortBy('order')
                 ->mapWithKeys(function ($stop) use ($stops) {

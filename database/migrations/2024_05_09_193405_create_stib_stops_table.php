@@ -1,6 +1,6 @@
 <?php
 
-use Database\Seeders\StibLineAndStopSeeder;
+use Database\Seeders\StibStopSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,14 +12,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('line_stop', function (Blueprint $table) {
-            $table->unsignedBigInteger('line_id');
-            $table->unsignedBigInteger('stop_id');
-            $table->integer('order');
+        Schema::create('stib_stops', function (Blueprint $table) {
+            $table->id();
+            $table->string('internal_id');
+            $table->json('name')->nullable();
+            $table->geography('coordinates', 'point')->nullable();
             $table->timestamps();
         });
 
-        (new StibLineAndStopSeeder())->run();
+        (new StibStopSeeder())->run();
     }
 
     /**
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('line_stop');
+        Schema::dropIfExists('stib_stops');
     }
 };
