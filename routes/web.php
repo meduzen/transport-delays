@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\BrusselsSubwayController;
 use App\Http\Controllers\LinesController;
 use App\Http\Controllers\LinesAndStopsController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/wip/brussels-subway', BrusselsSubwayController::class);
 
 Route::get('/wip/lines', LinesController::class);
 
