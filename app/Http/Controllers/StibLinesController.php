@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\StibLine;
 
-class LinesController extends Controller
+class StibLinesController extends Controller
 {
     public function __invoke()
     {
@@ -13,6 +13,6 @@ class LinesController extends Controller
             ->sortBy('name')
             ->groupBy('name');
 
-        return view('lines')->with('lines', $lines);
+        return view('stib.lines')->with('lines', $lines);
     }
 }
