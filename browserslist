@@ -1,0 +1,17 @@
+## Support of CSS :where and @container.
+## https://developer.mozilla.org/en-US/docs/Web/CSS/:where#browser_compatibility
+## https://developer.mozilla.org/en-US/docs/Web/CSS/@container#browser_compatibility
+
+and_chr >= 105
+Chrome >= 105
+
+and_ff >= 110
+Firefox >= 110
+
+Edge >= 105
+Opera >= 91
+
+ios_saf >= 16
+Safari >= 16
+
+Samsung >= 20
