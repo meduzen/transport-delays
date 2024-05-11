@@ -1,6 +1,5 @@
 <?php
 
-use Database\Seeders\StibStopSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stops', function (Blueprint $table) {
+        Schema::create('stib_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('internal_id');
-            $table->json('name')->nullable();
-            $table->geography('coordinates', 'point')->nullable();
+            $table->string('priority');
+            $table->string('type');
+            $table->json('content');
             $table->timestamps();
+            $table->timestamp('ended_at')->nullable();
+            $table->json('raw'); // for debug purpose
         });
-
-        (new StibStopSeeder())->run();
     }
 
     /**
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stops');
+        Schema::dropIfExists('stib_statuses');
     }
 };

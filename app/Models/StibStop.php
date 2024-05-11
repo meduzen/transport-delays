@@ -16,7 +16,7 @@ function rawPointToFloatPair($data)
     return [$res['X'],$res['Y']];
 }
 
-class Stop extends Model
+class StibStop extends Model
 {
     use HasFactory;
 
@@ -47,14 +47,15 @@ class Stop extends Model
      */
     public function lines(): BelongsToMany
     {
-        return $this->belongsToMany(Line::class);
+        return $this->belongsToMany(StibLine::class, 'stib_line_stib_stop', 'line_id', 'stop_id');
     }
 
     /**
      * The statuses that belong to the stop.
+     * Currently not done nor needed.
      */
-    public function statuses(): BelongsToMany
-    {
-        return $this->belongsToMany(Status::class);
-    }
+    // public function statuses(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(StibStatus::class, 'stib_status_stib_stop');
+    // }
 }

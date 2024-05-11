@@ -26,6 +26,6 @@ class StibStopSeeder extends Seeder
                 ];
             });
 
-        DB::table('stops')->insert($stops->toArray());
+        DB::table('stib_stops')->insert($stops->toArray());
     }
 }

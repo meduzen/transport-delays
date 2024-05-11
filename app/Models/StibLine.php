@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Line extends Model
+class StibLine extends Model
 {
     use HasFactory;
 
@@ -29,7 +29,7 @@ class Line extends Model
      */
     public function stops(): BelongsToMany
     {
-        return $this->belongsToMany(Stop::class);
+        return $this->belongsToMany(StibStop::class, 'stib_line_stib_stop', 'stop_id', 'line_id');
     }
 
     /**
@@ -37,6 +37,6 @@ class Line extends Model
      */
     public function statuses(): BelongsToMany
     {
-        return $this->belongsToMany(Status::class);
+        return $this->belongsToMany(StibStatus::class, 'stib_line_stib_status', 'status_id', 'line_id');
     }
 }
