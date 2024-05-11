@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lines', function (Blueprint $table) {
+        Schema::create('stib_lines', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('city')->nullable();
@@ -21,7 +21,7 @@ return new class extends Migration
             // Self-reference to line `id`
             $table->unsignedBigInteger('opposite_direction_id')->nullable(); // `id` in same table
             $table->foreign('opposite_direction_id')
-                ->references('id')->on('lines')
+                ->references('id')->on('stib_lines')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lines');
+        Schema::dropIfExists('stib_lines');
     }
 };
