@@ -11,24 +11,28 @@
 
 <ul>
     @foreach ($lines as $line)
-        <h3>Line {{ $line[0]->name }}</h3>
-        <ul>
+        <h3>Line: {{ $line[0]->name }}</h3>
+
+        {{-- <ul>
             <p>Direction {{ $line[0]->various->direction }}: <code>fr</code> {{ $line[0]->direction->fr }}, <code>nl</code> {{ $line[0]->direction->nl }}</p>
             <p>Direction {{ $line[1]->various->direction }}: <code>fr</code> {{ $line[1]->direction->fr }}, <code>nl</code> {{ $line[1]->direction->nl }}</p>
-        </ul>
-        <h4>Status</h4>
+        </ul> --}}
+
+        {{-- <h4>Status</h4> --}}
+
         @if($line[0]->statuses->count())
-            <ol>
+
+        <ul>
             @foreach($line[0]->statuses as $status)
                 <li>
                     <h3>#{{ $loop->index }} at {{ $status->created_at }}</h3>
-                    <p><code>type</code>: {{ $status->type }}</p>
-                    <p>Impacted lines: {{ $status->lines->pluck('name')->unique()->join(', ') }}</p>
+                    {{-- <p><code>type</code>: {{ $status->type }}</p> --}}
+                    {{-- <p>Impacted lines: {{ $status->lines->pluck('name')->unique()->join(', ') }}</p> --}}
                     <ul>
                     @foreach ($status->content as $content)
                         <li>
                             <p><code>priority</code>: {{ $status->priority }}</p>
-                            <p><code>type</code>: {{ $content['type'] }}</p>
+                            {{-- <p><code>type</code>: {{ $content['type'] }}</p> --}}
 
                             @foreach ($content['text'] as $text)
                                 @if(Arr::has($text, 'en'))
@@ -46,10 +50,15 @@
                     </ul>
                 </li>
             @endforeach
-            </ol>
+            </ul>
+
         @else
+
         <p>Everything runs fine today!</p>
+
         @endif
+
     @endforeach
+
 </ul>
 @endsection
