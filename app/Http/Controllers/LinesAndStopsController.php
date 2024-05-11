@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Line;
+use App\Models\StibLine;
 
 class LinesAndStopsController extends Controller
 {
@@ -11,7 +11,7 @@ class LinesAndStopsController extends Controller
      */
     public function __invoke()
     {
-        $lines = Line::with('stops')->get();
+        $lines = StibLine::with('stops')->get();
         return view('lines-and-stops')->with('lines', $lines);
     }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Line;
+use App\Models\StibLine;
 
 class LinesController extends Controller
 {
     public function __invoke()
     {
-        $lines = Line::with('statuses')
+        $lines = StibLine::with('statuses')
             ->get()
             ->sortBy('name')
             ->groupBy('name');
