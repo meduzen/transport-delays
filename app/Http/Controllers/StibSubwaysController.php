@@ -12,7 +12,7 @@ class StibSubwaysController extends Controller
     public function __invoke()
     {
         $lines = StibLine::whereIn('name', [1, 2, 3, 4, 5, 6])
-            ->with('statuses')
+            ->with('disruptions')
             ->get()
             ->sortBy('name')
             ->groupBy('name');
