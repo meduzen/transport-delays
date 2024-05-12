@@ -11,4 +11,6 @@ Route::get('/stib/lines', StibLinesController::class);
 
 Route::get('/stib/lines-and-stops', StibLinesAndStopsController::class);
 
+Route::get('/stib/test-api', StibApiTestController::class);
+
 Route::get('/laravel', fn () => view('laravel'));
