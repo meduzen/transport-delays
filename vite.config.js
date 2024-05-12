@@ -18,5 +18,6 @@ export default defineConfig({
               'routes/**',
             ],
         }),
+        TurboConsole(),
     ],
 });
