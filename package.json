@@ -15,6 +15,7 @@
         "postcss-safe-area": "^0.1.1",
         "postcss-scss": "^4.0.9",
         "postcss-size": "^5.0",
+        "unplugin-turbo-console": "^1.8.6",
         "vite": "^5.0"
     }
 }

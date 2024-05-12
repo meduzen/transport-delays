@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import TurboConsole from 'unplugin-turbo-console/vite'
 
 export default defineConfig({
     plugins: [
