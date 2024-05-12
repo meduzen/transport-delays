@@ -1,0 +1,52 @@
+.lines {
+  display: grid;
+  gap: 1rem;
+}
+
+.lines__row {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.line__rowDetail {
+  flex-grow: 1;
+}
+
+.line__rowHours {
+  --per-hour: 60;
+
+  display: grid;
+  grid-template-columns: repeat(calc(24 * var(--per-hour)), calc(4ch / var(--per-hour)));
+}
+
+.line__rowHour {
+  grid-column: span var(--per-hour);
+}
+
+.line__rowStatus {
+  min-height: 3ch;
+  background-color: hsl(89 40% 80%);
+}
+
+.line__rowDisruption {
+  grid-column: calc(var(--hours) * var(--per-hour) + var(--minutes)) / span var(--per-hour);
+
+  display: grid;
+  place-items: stretch;
+
+  background-color: crimson;
+}
+
+// .line__rowDisruptionBtn {
+//   size: 100%; // same result as `grid` + `place-items: stretch` on parent
+// }
+
+.line__rowNoDisruption {
+  padding-inline: 1rem;
+}
+
+.line__rowDisruptionDetails {
+  max-height: 100vh;
+}

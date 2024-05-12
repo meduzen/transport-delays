@@ -39,4 +39,12 @@ class StibLine extends Model
     {
         return $this->belongsToMany(StibStatus::class, 'stib_line_stib_status', 'status_id', 'line_id');
     }
+
+    /**
+     * The statuses that belong to the line.
+     */
+    public function disruptions(): BelongsToMany
+    {
+        return $this->statuses()->disruptions();
+    }
 }
