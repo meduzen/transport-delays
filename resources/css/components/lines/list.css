@@ -1,0 +1,39 @@
+.lines {
+  display: grid;
+  gap: 1rem;
+}
+
+.lines__row {
+  padding: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.line__rowDetail {
+  flex-grow: 1;
+}
+
+.line__rowNoDisruption {}
+
+.line__rowHours {
+  --per-hour: 60;
+
+  display: grid;
+  grid-template-columns: repeat(calc(24 * var(--per-hour)), calc(4ch / var(--per-hour)));
+}
+
+.line__rowHour {
+  grid-column: span var(--per-hour);
+}
+
+.line__rowStatus {
+  min-height: 2ch;
+  background-color: yellowgreen;
+}
+
+.line__rowIncident {
+  grid-column: calc(var(--hours) * var(--per-hour) + var(--minutes)) / span var(--per-hour);
+
+  background-color: crimson;
+}

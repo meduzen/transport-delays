@@ -4,6 +4,7 @@
 
 // Components
 @import url(./components/btn.css);
+@import url(./components/lines/index.css);
 
 // The big things
 @import url(./layout/index.css);
