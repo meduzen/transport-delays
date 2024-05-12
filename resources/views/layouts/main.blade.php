@@ -12,7 +12,9 @@
 </head>
 <body>
 
-@yield('content')
+    @include('layouts.header')
+
+    @yield('content')
 
 </body>
 </html>
