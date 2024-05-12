@@ -5,7 +5,7 @@
 @section('content')
 <h1>STIB Open Data exploration</h1>
 
-<p>Sample data from <a href="https://data.stib-mivb.brussels/explore/dataset/travellers-information-rt-production">Travellers Information (RT) on STIB open data poral</a></p>
+<p>Sample data from <a href="https://data.stib-mivb.brussels/explore/dataset/travellers-information-rt-production">Travellers Information (RT) on STIB open data portal</a></p>
 
 <h2>Lines and stops</h2>
 
