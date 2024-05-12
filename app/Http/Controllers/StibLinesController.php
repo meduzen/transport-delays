@@ -8,7 +8,7 @@ class StibLinesController extends Controller
 {
     public function __invoke()
     {
-        $lines = StibLine::with('statuses')
+        $lines = StibLine::with('disruptions')
             ->get()
             ->sortBy('name')
             ->groupBy('name');

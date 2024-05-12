@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\StibSubwaysController;
 use App\Http\Controllers\StibLinesController;
 use App\Http\Controllers\StibLinesAndStopsController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/stib/subways', StibSubwaysController::class);
 
 Route::get('/stib/lines', StibLinesController::class);
 

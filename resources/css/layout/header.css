@@ -1,0 +1,22 @@
+.header {
+  padding-inline: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: .1rem solid;
+}
+
+.header__title {
+  font-size: inherit;
+  font-weight: bold;
+}
+
+.header__links {
+  gap: 2rem;
+}
+
+.header__tempLink {
+  padding-block: 1rem;
+}

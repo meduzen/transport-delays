@@ -1,0 +1,4 @@
+// Prevent `font-weight: bold` to be set on `h{n}.visually-hidden`.
+:where(h1, h2, h3, h4, h5, h6) {
+  font-weight: inherit;
+}
