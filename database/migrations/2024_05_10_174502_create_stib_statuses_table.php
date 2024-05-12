@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('stib_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('priority');
+            $table->unsignedTinyInteger('priority');
             $table->string('type');
             $table->json('content');
             $table->timestamps();
