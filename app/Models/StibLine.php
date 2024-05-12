@@ -35,15 +35,6 @@ class StibLine extends Model
     /**
      * The statuses that belong to the line.
      */
-    public function disruptions(): BelongsToMany
-    {
-        return $this->belongsToMany(StibStatus::class, 'stib_line_stib_status', 'status_id', 'line_id')
-            ->disruptions();
-    }
-
-    /**
-     * The statuses that belong to the line.
-     */
     public function statuses(): BelongsToMany
     {
         return $this->belongsToMany(StibStatus::class, 'stib_line_stib_status', 'status_id', 'line_id');

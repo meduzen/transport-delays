@@ -6,11 +6,7 @@
 .lines__row {
   padding: 1rem;
   display: flex;
-<<<<<<< ours
   align-items: center;
-=======
-  align-items: baseline;
->>>>>>> theirs
   gap: 1rem;
 }
 
@@ -18,11 +14,6 @@
   flex-grow: 1;
 }
 
-<<<<<<< ours
-=======
-.line__rowNoDisruption {}
-
->>>>>>> theirs
 .line__rowHours {
   --per-hour: 60;
 
@@ -35,7 +26,6 @@
 }
 
 .line__rowStatus {
-<<<<<<< ours
   min-height: 3ch;
   background-color: hsl(89 40% 80%);
 }
@@ -60,14 +50,3 @@
 .line__rowDisruptionDetails {
   max-height: 100vh;
 }
-=======
-  min-height: 2ch;
-  background-color: yellowgreen;
-}
-
-.line__rowIncident {
-  grid-column: calc(var(--hours) * var(--per-hour) + var(--minutes)) / span var(--per-hour);
-
-  background-color: crimson;
-}
->>>>>>> theirs

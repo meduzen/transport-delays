@@ -52,7 +52,6 @@
             {{-- <h4>Status</h4> --}}
 
             @if(!$line[0]->disruptions->count())
-<<<<<<< ours
             <div class="line__rowStatus">
                 <p class="visually-hidden">The line runs fine today!</p>
             </div>
@@ -101,44 +100,6 @@
 
                 </ul>
             </div>
-=======
-                <p class="line__rowNoDisruption">The line runs fine today!</p>
-            @else
-
-            <div class="line__rowHours line__rowStatus">
-                <button type="button" class="line__rowIncident" style="--hours: 10; --minutes: 25;"></button>
-            </div>
-            {{-- <ul>
-                @foreach($line[0]->disruptions as $disruption)
-                    <li>
-                        <h3>#{{ $loop->index }} at {{ $disruption->created_at }}</h3>
-                        <p><code>type</code>: {{ $disruption->type }}</p>
-                        <p>Impacted lines: {{ $disruption->lines->pluck('name')->unique()->join(', ') }}</p>
-                        <ul>
-                        @foreach ($disruption->content as $content)
-                            <li>
-                                <p><code>priority</code>: {{ $disruption->priority }}</p>
-                                <p><code>type</code>: {{ $content['type'] }}</p>
-
-                                @foreach ($content['text'] as $text)
-                                    @if(Arr::has($text, 'en'))
-                                        <p><code>en</code>: {{ $text['en'] }}</p>
-                                    @endif
-                                    @if(Arr::has($text, 'fr'))
-                                        <p><code>fr</code>: {{ $text['fr'] }}</p>
-                                    @endif
-                                    @if(Arr::has($text, 'nl'))
-                                        <p><code>nl</code>: {{ $text['nl'] }}</p>
-                                    @endif
-                                @endforeach
-                            </li>
-                        @endforeach
-                        </ul>
-                    </li>
-                @endforeach
-            </ul> --}}
-
->>>>>>> theirs
             @endif
         </div>
 
@@ -147,10 +108,6 @@
     @endforeach
 </ul>
 
-<<<<<<< ours
 <p>Sample data from <a class="underline" href="https://data.stib-mivb.brussels/explore/dataset/travellers-information-rt-production">real-time Travellers Information</a> (STIB), except I’m not real-time yet.</p>
-=======
-<p>Sample data from <a class="underline" href="https://data.stib-mivb.brussels/explore/dataset/travellers-information-rt-production">real-time Travellers Information</a> (STIB)</p>
->>>>>>> theirs
 
 @endsection
