@@ -1,12 +1,12 @@
 import postcssPresetEnv from 'postcss-preset-env'
-import postcssSafeArea from 'postcss-safe-area'
+import postcssDarkThemeClass from 'postcss-dark-theme-class'
 import postcssSize from 'postcss-size'
 import cssNano from 'cssnano'
 
 const postcssPresetEnvOptions = {
   stage: 0,
 
-  // https://github.com/csstools/postcss-plugins/blob/main/plugin-packs/postcss-preset-env/src/plugins/plugins-by-id.mjs
+  // https://github.com/csstools/postcss-plugins/blob/main/plugin-packs/postcss-preset-env/FEATURES.md
   features: {
 
     // https://github.com/maximkoretskiy/postcss-initial
@@ -18,10 +18,19 @@ const postcssPresetEnvOptions = {
     // https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nested-calc#options
     'nested-calc': { preserve: false },
 
-    // https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting
-    'nesting-rules': true,
+    /**
+     * https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting
+     *
+     * `2024-02` is the other possible value, but it makes some nesting
+     * behaviours cumbersome like, `.yo { &, &::before }`, unallowed
+     * by specification:
+     * https://www.w3.org/TR/css-nesting-1/#example-7145ff1e
+     */
+    'nesting-rules': { edition: '2021' }
   },
 }
+
+const cssNanoOptions = { preset: ['default', { colormin: false }] }
 
 export default ({ options, env }) => ({
   /**
@@ -31,8 +40,14 @@ export default ({ options, env }) => ({
   parser: 'postcss-scss',
   plugins: [
     postcssSize(),
-    postcssSafeArea(),
     postcssPresetEnv(postcssPresetEnvOptions),
-    env === 'production' ? cssNano() : false,
+
+    // must be after `postcss-preset-env`
+    postcssDarkThemeClass({
+      darkSelector: '.theme-set.basic-black',
+      lightSelector: '.theme-set.basic-white',
+    }),
+
+    env === 'production' ? cssNano(cssNanoOptions) : false,
   ],
 })

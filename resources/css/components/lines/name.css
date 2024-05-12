@@ -1,0 +1,12 @@
+.line__name {
+  padding: 1rem;
+
+  size: 3ch;
+  font-size: 1.4rem;
+  font-weight: 700;
+
+  border-radius: 50%;
+
+  background: green;
+  color: white;
+}
