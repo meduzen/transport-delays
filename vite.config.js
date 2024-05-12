@@ -9,7 +9,13 @@ export default defineConfig({
               'resources/css/base.css',
               'resources/js/app.js'
             ],
-            refresh: true,
+            refresh: [
+              'app/**',
+              'config/**',
+              'lang/**',
+              'resources/views/**',
+              'routes/**',
+            ],
         }),
     ],
 });
