@@ -24,14 +24,14 @@ class StibSubwaysController extends Controller
              * starting by creating a relationship between status and stops
              */
             // attach disruptions to their related stops
-            ->map(function($line_group) {
-                $line_group->each(function($line) {
-                    $line->disruptions->each(function($disruption) use ($line) {
+            ->map(function ($line_group) {
+                $line_group->each(function ($line) {
+                    $line->disruptions->each(function ($disruption) use ($line) {
                         collect($disruption->raw->points)
-                            ->each(function($impacted_stop) use ($line, $disruption) {
+                            ->each(function ($impacted_stop) use ($line, $disruption) {
                                 $stop = $line->stops->firstWhere('internal_id', $impacted_stop['id']);
 
-                                if (!$stop) {
+                                if (! $stop) {
                                     return;
                                 }
 

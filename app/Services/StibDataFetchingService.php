@@ -22,7 +22,7 @@ class StibDataFetchingService
     {
         $res = Http::timeout(60)->get($this->baseUrl.'/travellers-information-rt-production/exports/json?timezone=Europe%2FBrussels');
 
-        if (!$res->ok()) {
+        if (! $res->ok()) {
             return false;
         }
 

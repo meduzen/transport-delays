@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\StibLinesController;
 use App\Http\Controllers\StibLinesAndStopsController;
+use App\Http\Controllers\StibLinesController;
 use App\Http\Controllers\StibSubwaysController;
 use Illuminate\Support\Facades\Route;
 

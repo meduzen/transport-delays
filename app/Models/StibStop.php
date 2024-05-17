@@ -12,8 +12,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 // @todo: Consider moving it to its custom Cast (https://laravel.com/docs/11.x/eloquent-mutators#custom-casts).
 function rawPointToFloatPair($data)
 {
-    $res = unpack("lSRID/CByteOrder/lTypeInfo/dX/dY", $data);
-    return [$res['X'],$res['Y']];
+    $res = unpack('lSRID/CByteOrder/lTypeInfo/dX/dY', $data);
+
+    return [$res['X'], $res['Y']];
 }
 
 class StibStop extends Model
