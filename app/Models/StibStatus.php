@@ -20,6 +20,7 @@ class StibStatus extends Model
     {
         return [
             'content' => AsArrayObject::class,
+            'raw' => AsArrayObject::class,
         ];
     }
 
