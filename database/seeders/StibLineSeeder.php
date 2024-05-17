@@ -46,7 +46,8 @@ class StibLineSeeder extends Seeder
 
             // Find line running in opposite direction.
 
-            $opposite_line = $lines->first(fn ($other_line) => $other_line['name'] == $line['name']
+            $opposite_line = $lines->first(fn ($other_line) =>
+                $other_line['name'] == $line['name']
                 && $other_line['direction'] != $line['direction']
             );
 
