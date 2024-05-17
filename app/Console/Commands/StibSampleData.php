@@ -16,7 +16,7 @@ class StibSampleData extends Command
     /**
      * The console command description.
      */
-    protected $description = 'Command description';
+    protected $description = 'Feed the database with sample STIB messages';
 
     /**
      * Execute the console command.
