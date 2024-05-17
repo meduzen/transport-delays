@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\StibLine;
-use Illuminate\Support\Str;
 
 class StibSubwaysController extends Controller
 {
@@ -12,8 +11,8 @@ class StibSubwaysController extends Controller
      */
     public function __invoke()
     {
-        // $lines = StibLine::with(['disruptions', 'stops'])
-        $lines = StibLine::whereIn('name', [1, 2, 3, 4, 5, 6])
+        $lines = StibLine::with(['disruptions', 'stops'])
+            ->whereIn('name', [1, 2, 3, 4, 5, 6, 41])
             ->get()
             ->sortBy('name')
 
