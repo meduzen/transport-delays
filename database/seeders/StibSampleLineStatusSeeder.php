@@ -18,6 +18,7 @@ class StibSampleLineStatusSeeder extends Seeder
         collect([
             Storage::json('samples/2024-04-29-travellers-information-rt-production.json'),
             Storage::json('samples/2024-05-10-travellers-information-rt-production.json'),
+            Storage::json('samples/2024-05-16-travellers-information-rt-production.json'),
         ])
             ->flatten(1)
             ->map(function ($info) {
