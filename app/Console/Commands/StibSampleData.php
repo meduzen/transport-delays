@@ -36,7 +36,9 @@ class StibSampleData extends Command
 
         $this
             ->newLine()
-            ->withProgressBar($data->all(), fn ($info) => StibDataFetchingService::store($info))
+            ->withProgressBar($data->all(), fn ($info) => StibDataFetchingService::store($info));
+
+        $this
             ->newLine(2)
             ->info($data->count().' messages added.');
 

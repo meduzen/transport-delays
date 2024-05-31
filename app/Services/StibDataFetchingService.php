@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\StibLine;
 use App\Models\StibStatus;
+use App\Models\StibStop;
 use Illuminate\Support\Facades\Http;
 
 class StibDataFetchingService
@@ -51,8 +52,12 @@ class StibDataFetchingService
         $status->save();
 
         $lines_id = collect($info['lines'])->pluck('id');
+        $stops_id = collect($info['points'])->pluck('id');
+
         $lines = StibLine::whereIn('name', $lines_id)->get();
+        $stops = StibStop::whereIn('internal_id', $stops_id)->get();
 
         $status->lines()->sync($lines);
+        $status->stops()->sync($stops);
     }
 }

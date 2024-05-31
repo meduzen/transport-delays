@@ -58,10 +58,9 @@ class StibStatus extends Model
 
     /**
      * The stops that belong to the status.
-     * Currently not done nor needed.
      */
-    // public function stops(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(StibStop::class, 'stib_status_stib_stop');
-    // }
+    public function stops(): BelongsToMany
+    {
+        return $this->belongsToMany(StibStop::class, 'stib_status_stib_stop', 'stop_id', 'status_id');
+    }
 }
