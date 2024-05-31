@@ -107,27 +107,25 @@
                         @foreach($line_direction->stops as $stop)
                         <li>
                             <h3>{{ $stop->name->fr }}</h3>
-                            @if($stop->statuses)
-                                @foreach ($stop->statuses as $status)
-                                    <ul>
-                                        @foreach ($status->content as $content)
-                                            <li>
-                                                @foreach ($content['text'] as $text)
-                                                    {{-- @if(Arr::has($text, 'en'))
-                                                        <p><code>en</code>: {{ $text['en'] }}</p>
-                                                    @endif --}}
-                                                    @if(Arr::has($text, 'fr'))
-                                                        <p>{{ $text['fr'] }}</p>
-                                                    @endif
-                                                    {{-- @if(Arr::has($text, 'nl'))
-                                                        <p><code>nl</code>: {{ $text['nl'] }}</p>
-                                                    @endif --}}
-                                                @endforeach
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @endforeach
-                            @endif
+                            @foreach ($stop->disruptions as $status)
+                                <ul>
+                                    @foreach ($status->content as $content)
+                                        <li>
+                                            @foreach ($content['text'] as $text)
+                                                {{-- @if(Arr::has($text, 'en'))
+                                                    <p><code>en</code>: {{ $text['en'] }}</p>
+                                                @endif --}}
+                                                @if(Arr::has($text, 'fr'))
+                                                    <p>{{ $text['fr'] }}</p>
+                                                @endif
+                                                {{-- @if(Arr::has($text, 'nl'))
+                                                    <p><code>nl</code>: {{ $text['nl'] }}</p>
+                                                @endif --}}
+                                            @endforeach
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endforeach
                         </li>
 
                         @endforeach
