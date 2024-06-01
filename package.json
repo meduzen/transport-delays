@@ -9,13 +9,13 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "cssnano": "^6",
+        "cssnano": "^7",
         "laravel-vite-plugin": "^1.0",
         "postcss-dark-theme-class": "^1.3.0",
         "postcss-preset-env": "^9",
         "postcss-scss": "^4.0.9",
         "postcss-size": "^5.0",
         "unplugin-turbo-console": "^1.8.6",
-        "vite": "^5.0"
+        "vite": "^5.2"
     }
 }
