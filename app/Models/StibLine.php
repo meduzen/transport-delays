@@ -11,12 +11,7 @@ class StibLine extends Model
 {
     use HasFactory;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected function casts()
     {
         return [
             'direction' => AsArrayObject::class,
