@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('stib_statuses', function (Blueprint $table) {
             $table->id();
             $table->unsignedTinyInteger('priority');
+            $table->boolean('active')->default(true);
             $table->string('type');
             $table->json('content');
             $table->timestamps();
             $table->timestamp('ended_at')->nullable();
-            $table->json('raw'); // for debug purpose
+            $table->json('raw');
+
+            $table->index('active');
         });
     }
 

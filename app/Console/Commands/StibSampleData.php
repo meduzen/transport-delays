@@ -21,26 +21,22 @@ class StibSampleData extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(StibDataFetchingService $service)
     {
         $this
             ->newLine()
-            ->info('Feeding the database with sample STIB messages…');
+            ->line('Feeding the database with sample STIB messages…');
 
         $data = collect([
             Storage::json('samples/2024-04-29-travellers-information-rt-production.json'),
-            Storage::json('samples/2024-05-10-travellers-information-rt-production.json'),
-            Storage::json('samples/2024-05-16-travellers-information-rt-production.json'),
+            // Storage::json('samples/2024-05-10-travellers-information-rt-production.json'),
+            // Storage::json('samples/2024-05-16-travellers-information-rt-production.json'),
         ])
             ->flatten(1);
 
-        $this
-            ->newLine()
-            ->withProgressBar($data->all(), fn ($info) => StibDataFetchingService::store($info));
+        $count = $service->process($data);
 
-        $this
-            ->newLine(2)
-            ->info($data->count().' messages added.');
+        $this->info($count.' messages added.');
 
         return 0;
     }

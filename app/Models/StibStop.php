@@ -61,4 +61,12 @@ class StibStop extends Model
     {
         return $this->statuses()->disruptions();
     }
+
+    /**
+     * The cricital statuses that belong to the stop and are active.
+     */
+    public function activeDisruptions(): BelongsToMany
+    {
+        return $this->disruptions()->active();
+    }
 }

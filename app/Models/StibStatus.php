@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,10 +12,13 @@ class StibStatus extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['active', 'ended_at'];
+
     protected function casts()
     {
         return [
             'content' => AsArrayObject::class,
+            'ended_at' => 'datetime',
             'raw' => AsArrayObject::class,
         ];
     }
@@ -38,9 +42,17 @@ class StibStatus extends Model
      * important”, as internal good practices are how agents decide to place
      * a disruption in 2 or 3 / 4 or 5 or 6.”
      */
-    public function scopeDisruptions($query)
+    public function scopeDisruptions(Builder $query): Builder
     {
         return $query->where('priority', '<=', 6);
+    }
+
+    /**
+     * Scope a query to filter active statuses.
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('active', '=', true);
     }
 
     /**

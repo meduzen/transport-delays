@@ -22,9 +22,13 @@ class StibMessages extends Command
      */
     public function handle(StibDataFetchingService $service)
     {
-        $this->line('Fetching current STIB messages…');
+        $this
+            ->newLine()
+            ->line('Fetching current STIB messages…');
 
-        $service->fetch();
+        $count = $service->fetch();
+
+        $this->info($count.' messages added.');
 
         return 0;
     }
