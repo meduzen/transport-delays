@@ -11,7 +11,7 @@ class StibSubwaysController extends Controller
      */
     public function __invoke()
     {
-        $lines = StibLine::with(['disruptions', 'stops.disruptions'])
+        $lines = StibLine::with(['todaysDisruptions', 'stops.todaysDisruptions'])
             ->whereIn('name', [1, 2, 3, 4, 5, 6])
             ->get()
             ->sortBy('name')

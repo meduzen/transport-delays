@@ -56,6 +56,18 @@ class StibStatus extends Model
     }
 
     /**
+     * Scope a query to filter today statuses.
+     *
+     * Included statuses are the ones that have ended today or not ended yet.
+     */
+    public function scopeToday(Builder $query): Builder
+    {
+        return $query
+            ->whereDate('ended_at', '=', date('Y-m-d'))
+            ->OrWhereNull('ended_at');
+    }
+
+    /**
      * The lines that belong to the status.
      */
     public function lines(): BelongsToMany
