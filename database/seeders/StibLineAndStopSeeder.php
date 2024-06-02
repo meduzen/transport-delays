@@ -33,7 +33,7 @@ class StibLineAndStopSeeder extends Seeder
                 })
                 ->filter(); // for safety, hopefully never needed
 
-            $line->stops()->sync($lines_stop);
+            $line->stops()->attach($lines_stop);
         });
     }
 }

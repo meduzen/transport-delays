@@ -13,6 +13,8 @@ class StibDataFetchingService
     protected string $baseUrl = 'https://data.stib-mivb.brussels/api/explore/v2.1/catalog/datasets';
 
     protected Collection $activeDisruptions;
+    protected Collection $lines;
+    protected Collection $stops;
 
     public function __construct()
     {
@@ -20,6 +22,8 @@ class StibDataFetchingService
             ->active()
             ->with(['lines', 'stops'])
             ->get();
+        $this->lines = StibLine::all();
+        $this->stops = StibStop::all();
     }
 
     /**
@@ -30,10 +34,11 @@ class StibDataFetchingService
         /** @todo Test `config('app.timezone')`. */
         $res = Http::timeout(60)
             ->withHeader('Authorization', 'ApiKey '.config('services.stib.api.key'))
+
+            /** @todo: check what’s the effect of the timezone or if we can ignore it */
             ->get($this->baseUrl.'/travellers-information-rt-production/exports/json?timezone=Europe%2FBrussels');
 
         if (! $res->ok()) {
-            // @todo: should throw instead?
             return false;
         }
 
@@ -90,11 +95,11 @@ class StibDataFetchingService
         $lines_id = collect($status->raw->lines)->pluck('id');
         $stops_id = collect($status->raw->points)->pluck('id');
 
-        $lines = StibLine::whereIn('name', $lines_id)->get();
-        $stops = StibStop::whereIn('internal_id', $stops_id)->get();
+        $lines = $this->lines->whereIn('name', $lines_id);
+        $stops = $this->stops->whereIn('internal_id', $stops_id);
 
-        $status->lines()->sync($lines);
-        $status->stops()->sync($stops);
+        $status->lines()->attach($lines);
+        $status->stops()->attach($stops);
     }
 
     public function createModel(array $info): StibStatus
