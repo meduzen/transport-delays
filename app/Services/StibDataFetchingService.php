@@ -28,7 +28,9 @@ class StibDataFetchingService
     public function fetch(): mixed
     {
         /** @todo Test `config('app.timezone')`. */
-        $res = Http::timeout(60)->get($this->baseUrl.'/travellers-information-rt-production/exports/json?timezone=Europe%2FBrussels');
+        $res = Http::timeout(60)
+            ->withHeader('Authorization', 'ApiKey '.config('services.stib.api.key'))
+            ->get($this->baseUrl.'/travellers-information-rt-production/exports/json?timezone=Europe%2FBrussels');
 
         if (! $res->ok()) {
             // @todo: should throw instead?
