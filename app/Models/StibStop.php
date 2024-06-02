@@ -29,7 +29,7 @@ class StibStop extends Model
     }
 
     /**
-     * Get the user's first name.
+     * Get the coordinates.
      */
     protected function coordinates(): Attribute
     {
