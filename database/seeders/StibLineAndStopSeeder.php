@@ -15,13 +15,13 @@ class StibLineAndStopSeeder extends Seeder
     {
         $stops = StibStop::all();
 
-        StibLine::all()->each(function($line) use ($stops) {
+        StibLine::all()->each(function ($line) use ($stops) {
             $lines_stop = collect($line->various->points)
                 ->sortBy('order')
                 ->mapWithKeys(function ($stop) use ($stops) {
                     $matching_stop = $stops->first(fn ($stop_detail) => $stop_detail->internal_id == $stop['id']);
 
-                    if(!$matching_stop) {
+                    if (! $matching_stop) {
                         return [null => null];
                     }
 

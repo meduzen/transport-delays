@@ -14,7 +14,7 @@ class StibStopSeeder extends Seeder
     public function run(): void
     {
         $stops = collect(Storage::json('seed/stib-stop-details-production.json'))
-            ->map(function($stop) {
+            ->map(function ($stop) {
                 $geo = json_decode($stop['gpscoordinates']);
 
                 return [

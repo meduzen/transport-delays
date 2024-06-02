@@ -12,20 +12,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 // @todo: Consider moving it to its custom Cast (https://laravel.com/docs/11.x/eloquent-mutators#custom-casts).
 function rawPointToFloatPair($data)
 {
-    $res = unpack("lSRID/CByteOrder/lTypeInfo/dX/dY", $data);
-    return [$res['X'],$res['Y']];
+    $res = unpack('lSRID/CByteOrder/lTypeInfo/dX/dY', $data);
+
+    return [$res['X'], $res['Y']];
 }
 
 class StibStop extends Model
 {
     use HasFactory;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected function casts()
     {
         return [
             'name' => AsArrayObject::class,
@@ -52,10 +48,33 @@ class StibStop extends Model
 
     /**
      * The statuses that belong to the stop.
-     * Currently not done nor needed.
      */
-    // public function statuses(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(StibStatus::class, 'stib_status_stib_stop');
-    // }
+    public function statuses(): BelongsToMany
+    {
+        return $this->belongsToMany(StibStatus::class, 'stib_status_stib_stop', 'status_id', 'stop_id');
+    }
+
+    /**
+     * The cricital statuses that belong to the stop.
+     */
+    public function disruptions(): BelongsToMany
+    {
+        return $this->statuses()->disruptions();
+    }
+
+    /**
+     * The cricital statuses that belong to the stop and are active.
+     */
+    public function activeDisruptions(): BelongsToMany
+    {
+        return $this->disruptions()->active();
+    }
+
+    /**
+     * Today’s cricital statuses that belong to the stop.
+     */
+    public function todaysDisruptions(): BelongsToMany
+    {
+        return $this->disruptions()->today();
+    }
 }

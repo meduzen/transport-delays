@@ -38,9 +38,11 @@ class StibLineSeeder extends Seeder
 
         $lines = StibLine::all();
 
-        $lines->each(function($line) use ($lines) {
+        $lines->each(function ($line) use ($lines) {
 
-            if ($line->opposite_direction_id !== null) { return; }
+            if ($line->opposite_direction_id !== null) {
+                return;
+            }
 
             // Find line running in opposite direction.
 
@@ -49,7 +51,9 @@ class StibLineSeeder extends Seeder
                 && $other_line['direction'] != $line['direction']
             );
 
-            if (!$opposite_line) { return; }
+            if (! $opposite_line) {
+                return;
+            }
 
             // Associate opposite line.
 

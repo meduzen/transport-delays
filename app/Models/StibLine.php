@@ -11,12 +11,7 @@ class StibLine extends Model
 {
     use HasFactory;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected function casts()
     {
         return [
             'direction' => AsArrayObject::class,
@@ -41,10 +36,26 @@ class StibLine extends Model
     }
 
     /**
-     * The statuses that belong to the line.
+     * The cricital statuses that belong to the line.
      */
     public function disruptions(): BelongsToMany
     {
         return $this->statuses()->disruptions();
+    }
+
+    /**
+     * The cricital statuses that belong to the line and are active.
+     */
+    public function activeDisruptions(): BelongsToMany
+    {
+        return $this->disruptions()->active();
+    }
+
+    /**
+     * Today’s cricital statuses that belong to the line.
+     */
+    public function todaysDisruptions(): BelongsToMany
+    {
+        return $this->disruptions()->today();
     }
 }

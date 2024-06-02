@@ -47,7 +47,7 @@
 
         <div class="line__rowDetail">
 
-            @if(!$line[0]->disruptions->count() && !$line[1]->disruptions->count())
+            @if(!$line[0]->todaysDisruptions->count() && !$line[1]->todaysDisruptions->count())
 
                 <div class="line__rowStatus">
                     <p class="visually-hidden">The line runs fine today!</p>
@@ -72,7 +72,7 @@
                     <button type="button" popovertarget="line-{{ Str::slug($line[0]->name) }}-disruptions">Close</button>
 
                     <ul>
-                        @foreach($line[0]->disruptions->concat($line[1]->disruptions) as $disruption)
+                        @foreach($line[0]->todaysDisruptions->concat($line[1]->todaysDisruptions) as $disruption)
                             <li>
                                 {{-- <p>Impacted lines: {{ $disruption->lines->pluck('name')->unique()->join(', ') }}</p> --}}
                                 <ul>
@@ -107,27 +107,25 @@
                         @foreach($line_direction->stops as $stop)
                         <li>
                             <h3>{{ $stop->name->fr }}</h3>
-                            @if($stop->statuses)
-                                @foreach ($stop->statuses as $status)
-                                    <ul>
-                                        @foreach ($status->content as $content)
-                                            <li>
-                                                @foreach ($content['text'] as $text)
-                                                    {{-- @if(Arr::has($text, 'en'))
-                                                        <p><code>en</code>: {{ $text['en'] }}</p>
-                                                    @endif --}}
-                                                    @if(Arr::has($text, 'fr'))
-                                                        <p>{{ $text['fr'] }}</p>
-                                                    @endif
-                                                    {{-- @if(Arr::has($text, 'nl'))
-                                                        <p><code>nl</code>: {{ $text['nl'] }}</p>
-                                                    @endif --}}
-                                                @endforeach
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @endforeach
-                            @endif
+                            @foreach ($stop->todaysDisruptions as $status)
+                                <ul>
+                                    @foreach ($status->content as $content)
+                                        <li>
+                                            @foreach ($content['text'] as $text)
+                                                {{-- @if(Arr::has($text, 'en'))
+                                                    <p><code>en</code>: {{ $text['en'] }}</p>
+                                                @endif --}}
+                                                @if(Arr::has($text, 'fr'))
+                                                    <p>{{ $text['fr'] }}</p>
+                                                @endif
+                                                {{-- @if(Arr::has($text, 'nl'))
+                                                    <p><code>nl</code>: {{ $text['nl'] }}</p>
+                                                @endif --}}
+                                            @endforeach
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endforeach
                         </li>
 
                         @endforeach
