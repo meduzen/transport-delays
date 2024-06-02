@@ -31,4 +31,10 @@ return [
         ],
     ],
 
+    'stib' => [
+        'api' => [
+            'key' => env('STIB_API_KEY'),
+        ],
+    ],
+
 ];

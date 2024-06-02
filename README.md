@@ -14,6 +14,19 @@ You can also run `php artisan schedule:work` on your machine to fetch data on a 
 
 In your browser, visit the `/stib/subways` route.
 
+## STIB API
+
+Without API key, the API is rate-limited to 100 calls per day, which makes an average of 1 call every 14 minutes and 24 seconds. [With API key](https://help.opendatasoft.com/apis/ods-explore-v2/#section/Authentication/Finding-and-generating-API-keys), you get 10000 calls per day, which makes an average of 1 call every 8.64 seconds.
+
+To get an API key, create a user on STIB API portal, then go to the [dedicated section](https://data.stib-mivb.brussels/account/api-keys/).
+
+Example code:
+
+```php
+Http::withHeader('Authorization', 'ApiKey '.config('services.stib.api.key'))
+  ->get($this->baseUrl.'/travellers-information-rt-production/exports/json');
+```
+
 ---
 
 # Default Laravel README.md
