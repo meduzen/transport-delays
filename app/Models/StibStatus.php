@@ -82,4 +82,69 @@ class StibStatus extends Model
     {
         return $this->belongsToMany(StibStop::class, 'stib_status_stib_stop', 'stop_id', 'status_id');
     }
+
+    /**
+     * Check if another status is equal to the status.
+     */
+    public function equal(StibStatus $status): bool
+    {
+        // Compare type
+
+        if ($this->type != $status->type) {
+            return false;
+        }
+
+        // Compare priority
+
+        if ($this->priority != $status->priority) {
+            return false;
+        }
+
+        // Compare stops
+
+        $stops_id = collect($this->raw->points)->pluck('id');
+        $status_stops_id = collect($status->raw->points)->pluck('id');
+        $stops_diff = $stops_id->diff($status_stops_id);
+
+        if ($stops_diff->count() > 0) {
+            return false;
+        }
+
+        // Compare lines
+
+        $lines_id = collect($this->raw->lines)->pluck('id');
+        $status_lines_id = collect($status->raw->lines)->pluck('id');
+        $lines_diff = $lines_id->diff($status_lines_id);
+
+        if ($lines_diff->count() > 0) {
+            return false;
+        }
+
+        // Compare content
+
+        if (count($this->content) != count($status->content)) {
+            return false;
+        }
+
+        foreach ($this->content as $key => $content) {
+            $status_content = $status->content[$key];
+
+            if ($content['type'] != $status_content['type']) {
+                return false;
+            }
+
+            if (count($content['text']) != count($status_content['text'])) {
+                return false;
+            }
+
+            foreach ($content['text'] as $text_key => $text) {
+                $diff = array_diff($text, $status_content['text'][$text_key]);
+                if (count($diff) > 0) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }

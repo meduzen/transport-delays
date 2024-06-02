@@ -52,7 +52,7 @@ class StibLine extends Model
     }
 
     /**
-     * Today’s cricital statuses that belong to the stop.
+     * Today’s cricital statuses that belong to the line.
      */
     public function todaysDisruptions(): BelongsToMany
     {

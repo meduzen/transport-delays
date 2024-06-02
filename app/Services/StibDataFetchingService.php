@@ -50,13 +50,13 @@ class StibDataFetchingService
         // Are existing disruptions still active or stale?
 
         [$active, $stale] = $this->activeDisruptions->partition(function ($status) use ($statuses) {
-            return $statuses->first(fn ($entry) => $this->areEqual($status, $entry));
+            return $statuses->first(fn ($entry) => $status->equal($entry));
         });
 
         // Only keep new statuses.
 
         $statuses = $statuses->reject(function ($entry) {
-            return $this->activeDisruptions->first(fn ($status) => $this->areEqual($status, $entry));
+            return $this->activeDisruptions->first(fn ($status) => $status->equal($entry));
         });
 
         // Active disruptions: update `updated_at` by touching the model (`active` is already `true`).
@@ -112,70 +112,5 @@ class StibDataFetchingService
         $status->raw = $info;
 
         return $status;
-    }
-
-    /**
-     * Compare two Stib statuses.
-     */
-    public function areEqual(StibStatus $a, StibStatus $b): bool
-    {
-        // Compare type
-
-        if ($a->type != $b->type) {
-            return false;
-        }
-
-        // Compare priority
-
-        if ($a->priority != $b->priority) {
-            return false;
-        }
-
-        // Compare stops
-
-        $a_stops_id = collect($a->raw->points)->pluck('id');
-        $b_stops_id = collect($b->raw->points)->pluck('id');
-        $stops_diff = $a_stops_id->diff($b_stops_id);
-
-        if ($stops_diff->count() > 0) {
-            return false;
-        }
-
-        // Compare lines
-
-        $a_lines_id = collect($a->raw->lines)->pluck('id');
-        $b_lines_id = collect($b->raw->lines)->pluck('id');
-        $lines_diff = $a_lines_id->diff($b_lines_id);
-
-        if ($lines_diff->count() > 0) {
-            return false;
-        }
-
-        // Compare content
-
-        if (count($a->content) != count($b->content)) {
-            return false;
-        }
-
-        foreach ($a->content as $key => $content) {
-            $b_content = $b->content[$key];
-
-            if ($content['type'] != $b_content['type']) {
-                return false;
-            }
-
-            if (count($content['text']) != count($b_content['text'])) {
-                return false;
-            }
-
-            foreach ($content['text'] as $text_key => $text) {
-                $diff = array_diff($text, $b_content['text'][$text_key]);
-                if (count($diff) > 0) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
     }
 }
