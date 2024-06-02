@@ -12,16 +12,13 @@ class StibDataFetchingService
 {
     protected string $baseUrl = 'https://data.stib-mivb.brussels/api/explore/v2.1/catalog/datasets';
 
-    protected Collection $activeDisruptions;
+    protected Collection $activeStatuses;
     protected Collection $lines;
     protected Collection $stops;
 
     public function __construct()
     {
-        $this->activeDisruptions = StibStatus::disruptions()
-            ->active()
-            ->with(['lines', 'stops'])
-            ->get();
+        $this->activeStatuses = StibStatus::active()->get();
         $this->lines = StibLine::all();
         $this->stops = StibStop::all();
     }
@@ -52,27 +49,27 @@ class StibDataFetchingService
      */
     public function process(Collection $data): int
     {
-        $statuses = $data->map(fn ($entry) => $this->createModel($entry));
+        $statuses = $data->map(fn ($entry) => $this->createModelFromApiEntry($entry));
 
-        // Are existing disruptions still active or stale?
+        // Are existing statuses still active or stale?
 
-        [$active, $stale] = $this->activeDisruptions->partition(function ($status) use ($statuses) {
+        [$active, $stale] = $this->activeStatuses->partition(function ($status) use ($statuses) {
             return $statuses->first(fn ($entry) => $status->equal($entry));
         });
 
         // Only keep new statuses.
 
         $statuses = $statuses->reject(function ($entry) {
-            return $this->activeDisruptions->first(fn ($status) => $status->equal($entry));
+            return $this->activeStatuses->first(fn ($status) => $status->equal($entry));
         });
 
-        // Active disruptions: update `updated_at` by touching the model (`active` is already `true`).
+        // Active statuses: update `updated_at` by touching the model (`active` is already `true`).
 
         if ($active->isNotEmpty()) {
             $active->toQuery()->update(['active' => true]);
         }
 
-        // End of disruption: last `updated_at` is now the end time.
+        // End of status: last `updated_at` is now the end time.
 
         if ($stale->isNotEmpty()) {
             $stale->toQuery()->update([
@@ -81,13 +78,16 @@ class StibDataFetchingService
             ]);
         }
 
-        // Save new disruptions.
+        // Save new statuses.
 
         $statuses->each(fn ($new_status) => $this->store($new_status));
 
         return $statuses->count();
     }
 
+    /**
+     * Save status and its relations (lines and stops).
+     */
     public function store(StibStatus $status): void
     {
         $status->save();
@@ -102,7 +102,7 @@ class StibDataFetchingService
         $status->stops()->attach($stops);
     }
 
-    public function createModel(array $info): StibStatus
+    public function createModelFromApiEntry(array $info): StibStatus
     {
         /**
          * Replace stringified JSON to have proper objects. It’s
