@@ -15,7 +15,7 @@
         "postcss-preset-env": "^9",
         "postcss-scss": "^4.0.9",
         "postcss-size": "^5.0",
-        "unplugin-turbo-console": "^1.8.6",
-        "vite": "^5.2"
+        "unplugin-turbo-console": "^1.8.9",
+        "vite": "^5.3"
     }
 }
