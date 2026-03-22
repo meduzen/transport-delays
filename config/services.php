@@ -14,6 +14,12 @@ return [
     |
     */
 
+    'belgian-mobility' => [
+        'api' => [
+            'key' => env('BELGIAN_API_KEY'),
+        ],
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
@@ -28,12 +34,6 @@ return [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
-        ],
-    ],
-
-    'stib' => [
-        'api' => [
-            'key' => env('STIB_API_KEY'),
         ],
     ],
 
