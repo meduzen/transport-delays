@@ -8,26 +8,29 @@ Work in progress.
 
 - Follow the usual Laravel project installation process.
 - Run `php artisan migrate` to initialize the database.
-- Run `php artisan stib:messages` to fetch data from the [real-time STIB API](https://data.stib-mivb.brussels/explore/dataset/travellers-information-rt-production/information/) **or** run `php artisan stib:sample` to use samples data.
+- Run `php artisan stib:messages` to fetch STIB messages data from the [real-time Belgian Mobility API](https://api-management-opendata-production.developer.azure-api.net/api-details#api=_api_datasets_stibmivb_rt_TravellersInformation&operation=api-datasets-stibmivb-rt-TravellersInformation) **or** run `php artisan stib:sample` to use samples data from 2024 and 2026.
 
 You can also run `php artisan schedule:work` on your machine to fetch data on a periodic basis.
 
 In your browser, visit the `/stib/subways` route.
 
-## STIB API
+## Belgian Mobility API
 
-Without API key, the API is rate-limited to 100 calls per day, which makes an average of 1 call every 14 minutes and 24 seconds. [With API key](https://help.opendatasoft.com/apis/ods-explore-v2/#section/Authentication/Finding-and-generating-API-keys), you get 10000 calls per day, which makes an average of 1 call every 8.64 seconds.
+Without API key, the [API is rate-limited](https://data.belgianmobility.io/en/terms.html#access) to 100 calls per day with up to 10 per minute, which makes an average of 1 call every 14 minutes and 24 seconds. With API key, you get 10000 calls per day with up to 500 per minute, which makes an average of 1 call every 8.64 seconds. There’s also a higher tier requiring to contact Belgian Mobility
 
-To get an API key, create yourself a user on the STIB API portal, then go to the [dedicated section](https://data.stib-mivb.brussels/account/api-keys/).
+To get an API key, create yourself a user on the [Belgian Mobility API portal](https://api-management-opendata-production.developer.azure-api.net/profile).
 
 Example code using Laravel [`Http` client](https://laravel.com/docs/11.x/http-client):
 
 ```php
-$baseUrl = 'https://data.stib-mivb.brussels/api/explore/v2.1/catalog/datasets';
+$baseUrl = 'https://api-management-opendata-production.azure-api.net/api/datasets/stibmivb';
+$key = config('services.belgian-mobility.api.key');
 
-Http::withHeader('Authorization', 'ApiKey '.config('services.stib.api.key'))
-  ->get($baseUrl.'/travellers-information-rt-production/exports/json');
+Http::withHeader('Authorization', 'ApiKey '$key)
+  ->get($baseUrl.'/travellers-information-rt-production');
 ```
+
+General information about datasets and available APIs can also be found on [Belgian Mobility website](https://data.belgianmobility.io).
 
 ---
 

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Http;
 
 class StibDataFetchingService
 {
-    protected string $baseUrl = 'https://data.stib-mivb.brussels/api/explore/v2.1/catalog/datasets';
+    protected string $baseUrl = 'https://api-management-opendata-production.azure-api.net/api/datasets/stibmivb';
 
     protected Collection $activeStatuses;
     protected Collection $lines;
@@ -30,16 +30,14 @@ class StibDataFetchingService
     {
         /** @todo Test `config('app.timezone')`. */
         $res = Http::timeout(60)
-            ->withHeader('Authorization', 'ApiKey '.config('services.stib.api.key'))
-
-            /** @todo: check what’s the effect of the timezone or if we can ignore it */
-            ->get($this->baseUrl.'/travellers-information-rt-production/exports/json?timezone=Europe%2FBrussels');
+            ->withHeader('Authorization', 'ApiKey '.config('services.belgian-mobility.api.key'))
+            ->get($this->baseUrl.'/rt/TravellersInformation');
 
         if (! $res->ok()) {
             return false;
         }
 
-        return $this->process(collect($res->json()));
+        return $this->process(collect($res->json()['results']));
     }
 
     /**
